@@ -17,6 +17,7 @@ public class SumaMinimaSecuencia {
 			suma+=array[i];
 			if(suma<sumaMinLeft){
 				sumaMinLeft=suma;
+				System.out.println("sumo left"+sumaMinLeft);
 			}
 		}
 		//ver del medio a derecha la secuencia de suma minima
@@ -26,9 +27,9 @@ public class SumaMinimaSecuencia {
 			suma+=array[i];
 			if(suma<sumaMinRight){
 				sumaMinRight=suma;
+				System.out.println("sumo right"+sumaMinRight);
 			}
 		}
-		
 		return sumaMinLeft+sumaMinRight;			
 	}
 	//retorna la suma minima de una subsecuencia
@@ -42,41 +43,23 @@ public class SumaMinimaSecuencia {
 		}
 		else{
 			int middle= (left+right)/2;
-			return maxValorDeTres(sumaMinima(array,left,middle),sumaMinima(array,middle+1,right),sumaDelMedio(array,left,middle,right));
+			return minValorDeTres(sumaMinima(array,left,middle),sumaMinima(array,middle+1,right),sumaDelMedio(array,left,middle,right));
 
 		}
 		
 	}
 	//Calcula el max de tres valores
-	public static int maxValorDeTres(int a, int b, int c){
-		int max=0;
-		if (a>b && a>c){
-			max = a;
+	public static int minValorDeTres(int a, int b, int c){
+		int min=0;
+		if (a<b && a<c){
+			min = a;
 		}
-		if (b>a && b>c){
-			max = b;
+		if (b<a && b<c){
+			min = b;
 		}
-		if (c>a && c>b){
-			max = c;
+		if (c<a && c<b){
+			min = c;
 		}
-		return max;
+		return min;
 	}
-	//Copia los elementos de un array a otro.
-	public static int[] copyArray(int[] array,int begin,int end){
-    	int cota= end-begin;
-    	int[] aux= new int[cota];
-    	int i=0;
-    	while (i<cota){
-    		aux[i]=array[begin];
-    		//System.out.println(aux[i]);
-    		i++;
-    		begin++;
-
-    	}
-    	return aux;
-	}
-
-
-
-
 }
