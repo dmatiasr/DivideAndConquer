@@ -6,7 +6,6 @@ public class SumaMinimaSecuencia {
 		array[2]= 2;
 		array[3]= 9;
 		array[4]= 5;
-		
 		int res=sumaMinima(array,0,(array.length)-1);
 		System.out.println("Suma "+ res);
 	}	
@@ -23,7 +22,7 @@ public class SumaMinimaSecuencia {
 		//ver del medio a derecha la secuencia de suma minima
 		int sumaMinRight=Integer.MAX_VALUE;
 		suma=0;
-		for (int i=middle;i<=right;i++){
+		for (int i=middle+1;i<=right;i++){
 			suma+=array[i];
 			if(suma<sumaMinRight){
 				sumaMinRight=suma;
@@ -38,12 +37,12 @@ public class SumaMinimaSecuencia {
 			throw new IllegalArgumentException ("Null Array");
 		}
 		//caso base si tiene un solo elemento el arreglo
-		if(array.length==1){
+		if(left==right){
 			return array[left];
 		}
 		else{
 			int middle= (left+right)/2;
-			return maxValorDeTres(sumaMinima(array,left,middle),sumaMinima(array,middle+1,left),sumaDelMedio(array,left,middle,right));
+			return maxValorDeTres(sumaMinima(array,left,middle),sumaMinima(array,middle+1,right),sumaDelMedio(array,left,middle,right));
 
 		}
 		
