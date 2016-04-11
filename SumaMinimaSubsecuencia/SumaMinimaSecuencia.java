@@ -3,8 +3,8 @@ public class SumaMinimaSecuencia {
 		int[] array= new int[5];
 		array[0]= 3;
 		array[1]= 10;
-		array[2]= 2;
-		array[3]= 9;
+		array[2]= 9;
+		array[3]= 2;
 		array[4]= 5;
 		int res=sumaMinima(array,0,(array.length)-1);
 		System.out.println("Suma "+ res);
@@ -39,12 +39,11 @@ public class SumaMinimaSecuencia {
 		}
 		//caso base si tiene un solo elemento el arreglo
 		if(left==right){
-			return array[left];
-		}
-		else{
+			int valMax=Integer.MAX_VALUE;
+			return (valMax);
+		}else{
 			int middle= (left+right)/2;
 			return minValorDeTres(sumaMinima(array,left,middle),sumaMinima(array,middle+1,right),sumaDelMedio(array,left,middle,right));
-
 		}
 		
 	}
