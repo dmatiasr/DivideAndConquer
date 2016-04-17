@@ -20,12 +20,19 @@ import java.awt.Point;
 
 public class ClosestPoint{
 	public static void main(String[] args) {
-			
+		Point[] points={new Point(1,0),new Point(0,0),new Point(2,2),new Point(4,4),new Point(0,2)};		
+		Point[] res= bruteForce(points);
+		String str= toString(res);
+		System.out.println("Puntos mas cercanos");
+		System.out.println(str);
 	}
 	//Fuerza bruta para encontrar dos puntos mas cercanos.
+	/*
+		Para n elementos en el peor caso es O(n^2)
+	*/
 	public static  Point[] bruteForce(Point[] points){
 		int n= points.length;
-		Point[] resPoint= new Point[1];
+		Point[] resPoint= new Point[2];
 		if (n<2){
 			throw new IllegalArgumentException("Necesita dos puntos (x,y), por lo menos");
 		}
@@ -33,7 +40,7 @@ public class ClosestPoint{
 			double d= Double.POSITIVE_INFINITY; //constante infinito
 			for(int i=0; i<n;i++){
 				for(int j=i+1; j<n;j++){
-					double res= distance(p[i],p[j]);				
+					double res= distance(points[i],points[j]);				
 					if (res<d){//seteo nuevos puntos cercanos
 						d=res;
 						resPoint[0]=points[i]; //guardo en arreglo auxiliar los puntos
@@ -44,10 +51,22 @@ public class ClosestPoint{
 		}
 		return resPoint;
 	}
+	//sqrt ((x1-x2)^2 +(y1-y2)^2)
 	public static double distance(Point a, Point b){
 		double x= a.getX()-b.getX();
 		double y= a.getY()-a.getY();
-		return  Math.sqrt(Math.pow(x,2) + Math.pow(y,2)) ;
+		return  Math.sqrt(Math.pow(x,2) + Math.pow(y,2)) ; 
+	}
+
+	//to String personalizado para mostrar elementos de un arreglo
+	//es este caso, elementos pares
+	public static String toString(Point[] array){
+		String str="";
+		int n= array.length;
+		for (int i=0;i<n;i++){
+			str+="("+array[i].getX()+","+ array[i].getY() +")";		
+		}
+		return str;
 	}
 
 	//Minimo de dos double.
@@ -59,7 +78,10 @@ public class ClosestPoint{
 			return b;
 		}	
 	}
+	/*
+		Version Divide and Conquer
 
+	*/
 
 
 }
