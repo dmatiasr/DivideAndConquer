@@ -24,9 +24,10 @@ public class ClosestPoint{
 		Point[] points={new Point(1,0),new Point(0,0),new Point(2,2),new Point(4,4),new Point(0,2)};		
 		Point[] res= bruteForce(points);
 		String str= toString(res);
-		System.out.println("Puntos mas cercanos");
+		System.out.println("Puntos mas cercanos por Fuerza Bruta : ");
 		System.out.println(str);
 	}
+
 	//Fuerza bruta para encontrar dos puntos mas cercanos.
 	/*
 		Para n elementos en el peor caso es O(n^2)
@@ -87,10 +88,22 @@ public class ClosestPoint{
 
 	*/
 	public static Point[] divideAndConquer (Point[] points){
-		//
-		Point[] res= new Point[2];
+		// para caso base aplicar algoritmo de fuerza bruta.
+		int n= points.length;
+		Point[] res= new Point[2]; //dos elementos que van a ser los puntos de distancia minima
+		if (n<=3){  //Si tiene 3 elementos
+			res= bruteForce(points);	
+		}
+		else{
+			//aplicar divide and conquer
+			//copyOfRange(T[] original, int from, int to)
+
+			Point[] left = copyOfRange(points, 0, n/2 );
+			Point[] right= copyOfRange(points, (n/2)+1, n-1 );
+		}
 		return res;	
 	}
+
 	//Ordena el arreglo por el componente X.
 	public static void sortX(Point[] points){
 		//Ordena bajo un nuevo comparador 
