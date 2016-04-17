@@ -96,29 +96,72 @@ public class ClosestPoint{
 		}
 		else{
 			//aplicar divide and conquer
-			 sortX(points); //ordena por componente X
-			 //Divide en dos sub arreglos
-			 Point[] left = copyArray(points,0,n/2 );
-			 Point[] right= copyArray(points,(n/2),n);
-			 //Obtiene los dos minimos de cada lado de la raya vertical
-			 Point[] minLeft= divideAndConquer(left);
-			 Point[] minRight= divideAndConquer(right);
-			 //resultado en arreglo de dos posiciones, una posicion para cada punto.
-			 int i=0;
-			 double distLeft= distance(minLeft[0],minLeft[1]);
-			 double distRight= distance(minRight[0],minRight[1]);
-			 //obtengo el menor entre la parte izq y derecha
-			 if (distLeft<=distRight){
-			 	res=minLeft;
-			 }else{
-			 	res=minRight;
-			 }
-			 //ver cerca de la raya vertical:
-			 //para cada punto cerca de la raya del lado izquierdo
-			 //basta comparar con 6 del lado derecho.
-			 //ordeno el arreglo por componente Y
+			sortX(points); //ordena por componente X
+			//Divide en dos sub arreglos
+			Point[] left = copyArray(points,0,n/2 );
+			Point[] right= copyArray(points,(n/2),n);
+			//Obtiene los dos minimos de cada lado de la raya vertical
+			Point[] minLeft= divideAndConquer(left);
+			Point[] minRight= divideAndConquer(right);
+			//resultado en arreglo de dos posiciones, una posicion para cada punto.
+			double distLeft= distance(minLeft[0],minLeft[1]);
+			double distRight= distance(minRight[0],minRight[1]);
+			//obtengo el menor entre la parte izq y derecha
+			double dist=0;
+			if (distLeft<=distRight){
+				res=minLeft;
+				dist=distLeft;
+			}else{
+				res=minRight;
+				dist=distRight;
+			}
+			//ver cerca de la raya vertical:
+			//para cada punto cerca de la raya del lado izquierdo
+			//basta comparar con 6 del lado derecho.
+			//ordeno el arreglo por componente Y
+			double x= points[(n/2)-1].getX(); //obtengo el X cercano a la vertical
+			//de ese x obtener todos los y
+			//luego ordenarlos por coordenada y 
+			LinkedList pointsByY=new LinkedList();
+			for(int k=0 ; k<points.length; k++){
+				if (points[k].getX()==x){
+					if(Math.abs(points[k].getX()-x ) < dist){ //solo meto a la lista los
+						pointsByY.add(points[k]);			//que |points.x -x |<dist
+					}
+				}
+			}
+			//Por comodidad paso todos los elementos de la lista a un arreglo
+			//nuevamente.
+			Point[] pointsY= new Point[pointsByY.size()];
+			int q=0;
+			while( !(pointsByY.isEmpty()) ) {
+				 	pointsY[q]= (Point)pointsByY.poll();
+					q++;
+			}
+			//ordenar el nuevo arreglo en base a las y
+			sortY(pointsY);
+			//obtengo distancia minima comparando con 6 puntos como maximo y
+			//comparo la distancia obtenida con la distancia minima entre left y right
+			double dMinsY= Math.pow(dist,2);
+			for(int i=0;i<pointsY.length-1;i++){
+				for(int j=i+1; j<pointsY.length  ;j++){
+					double powMod= pow2Module(pointsY[j].getY(),pointsY[i].getY());
+					if (powMod < dMinsY)  {
+						break; //corte si no se da esta propiedad, en condicion de ciclo tirar error.
+					}
+					//dminsq ← min((S[k].x − S[i].x)^ 2 + (S[k].y − S[i].y)^ 2 , dminsq)
+					double aux= pow2Module(points[j].getX(),points[i].getX() )+pow2Module(points[j].getY(),points[i].getY()); 
+					dMinsY=	min(aux,dMinsY);//obtengo el minimo	
+					//comparar el resultado minimo obtenido aqui con el resultado de la parte minima izq o der.
+				}
+			}
+
 		}
 		return res;	
+	}
+	//(S[k].y − S[i].y)^2 < dminsq
+	public static double pow2Module(double a,double b){
+		return Math.pow((a-b),2);
 	}
 
 	//Ordena el arreglo por el componente X.
