@@ -92,14 +92,31 @@ public class ClosestPoint{
 		int n= points.length;
 		Point[] res= new Point[2]; //dos elementos que van a ser los puntos de distancia minima
 		if (n<=3){  //Si tiene 3 elementos
-			res= bruteForce(points);	
+			return bruteForce(points);	
 		}
 		else{
 			//aplicar divide and conquer
-			//copyOfRange(T[] original, int from, int to)
-
-			Point[] left = copyOfRange(points, 0, n/2 );
-			Point[] right= copyOfRange(points, (n/2)+1, n-1 );
+			 sortX(points); //ordena por componente X
+			 //Divide en dos sub arreglos
+			 Point[] left = copyArray(points,0,n/2 );
+			 Point[] right= copyArray(points,(n/2),n);
+			 //Obtiene los dos minimos de cada lado de la raya vertical
+			 Point[] minLeft= divideAndConquer(left);
+			 Point[] minRight= divideAndConquer(right);
+			 //resultado en arreglo de dos posiciones, una posicion para cada punto.
+			 int i=0;
+			 double distLeft= distance(minLeft[0],minLeft[1]);
+			 double distRight= distance(minRight[0],minRight[1]);
+			 //obtengo el menor entre la parte izq y derecha
+			 if (distLeft<=distRight){
+			 	res=minLeft;
+			 }else{
+			 	res=minRight;
+			 }
+			 //ver cerca de la raya vertical:
+			 //para cada punto cerca de la raya del lado izquierdo
+			 //basta comparar con 6 del lado derecho.
+			 //ordeno el arreglo por componente Y
 		}
 		return res;	
 	}
@@ -117,8 +134,7 @@ public class ClosestPoint{
         			i= 1; 
         		if (x1.getX()== x2.getX())
         			i= 0;
-        	
-    			return i;
+        		return i;
     		}
     	});
     }
@@ -138,7 +154,15 @@ public class ClosestPoint{
 			}	
 		});
 	}
-
+ 
+	public static Point[] copyArray(Point[] array,int begin,int end){
+    	int cota= end-begin;
+    	Point[] aux= new Point[cota];
+    	for (int i=0;i<cota;i++,begin++){
+    		aux[i]=array[begin];
+    	}
+    	return aux;
+	}
 
 
 }
