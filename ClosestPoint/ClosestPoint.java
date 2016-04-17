@@ -21,7 +21,7 @@ import java.util.*;
 
 public class ClosestPoint{
 	public static void main(String[] args) {
-		Point[] points={new Point(1,0),new Point(0,0),new Point(2,2),new Point(4,4),new Point(0,2)};		
+		Point[] points={new Point(1,0),new Point(0,0),new Point(2,2),new Point(4,4),new Point(0,2)};	
 		Point[] res= bruteForce(points);
 		String str= toString(res);
 		System.out.println("Puntos mas cercanos por Fuerza Bruta : ");
@@ -45,7 +45,7 @@ public class ClosestPoint{
 			double d= Double.POSITIVE_INFINITY; //constante infinito
 			for(int i=0; i<n;i++){
 				for(int j=i+1; j<n;j++){
-					double res= distance(points[i],points[j]);				
+					double res= distance(points[i],points[j]);			
 					if (res<d){//seteo nuevos puntos cercanos
 						d=res;
 						resPoint[0]=points[i]; //guardo en arreglo auxiliar los puntos
@@ -59,7 +59,7 @@ public class ClosestPoint{
 	//sqrt ((x1-x2)^2 +(y1-y2)^2)
 	public static double distance(Point a, Point b){
 		double x= a.getX()-b.getX();
-		double y= a.getY()-a.getY();
+		double y= a.getY()-b.getY();
 		return  Math.sqrt(Math.pow(x,2) + Math.pow(y,2)) ; 
 	}
 
