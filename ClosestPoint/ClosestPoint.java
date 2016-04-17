@@ -16,7 +16,8 @@
 */
 import java.io.*;
 import java.awt.Point;
-
+import java.util.Arrays;
+import java.util.*;
 
 public class ClosestPoint{
 	public static void main(String[] args) {
@@ -33,6 +34,9 @@ public class ClosestPoint{
 	public static  Point[] bruteForce(Point[] points){
 		int n= points.length;
 		Point[] resPoint= new Point[2];
+		if (points==null){
+			throw new IllegalArgumentException("Arreglo Nulo");
+		}
 		if (n<2){
 			throw new IllegalArgumentException("Necesita dos puntos (x,y), por lo menos");
 		}
@@ -79,9 +83,49 @@ public class ClosestPoint{
 		}	
 	}
 	/*
-		Version Divide and Conquer
+		Version Divide and Conquer.
 
 	*/
+	public static Point[] divideAndConquer (Point[] points){
+		//
+		Point[] res= new Point[2];
+		return res;	
+	}
+	//Ordena el arreglo por el componente X.
+	public static void sortX(Point[] points){
+		//Ordena bajo un nuevo comparador 
+		Arrays.sort(points, new Comparator<Point>() {
+    		//redefinicion de compareTo para Point
+    		public int compare(Point x1, Point x2) {
+        		int i=0;
+        		if ( x1.getX() < x2.getX() ) //sola linea no necesita llaves
+        			i= -1;
+        	  	if ( x1.getX()>x2.getX() )
+        			i= 1; 
+        		if (x1.getX()== x2.getX())
+        			i= 0;
+        	
+    			return i;
+    		}
+    	});
+    }
+
+	//Ordena el arreglo por el componente Y.
+	public static void sortY(Point[] points){
+		Arrays.sort(points, new Comparator<Point>() {
+			public int compare(Point p1, Point p2){
+				int i=0;
+				if(p1.getY() < p2.getY())
+					i=-1;	
+				if(p1.getY() > p2.getY())
+					i=1;
+				if(p1.getY() == p2.getY())
+					i=0;
+				return i;
+			}	
+		});
+	}
+
 
 
 }
