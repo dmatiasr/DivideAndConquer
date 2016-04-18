@@ -143,6 +143,7 @@ public class ClosestPoint{
 			//obtengo distancia minima comparando con 6 puntos como maximo y
 			//comparo la distancia obtenida con la distancia minima entre left y right
 			double dMinsY= Math.pow(dist,2);
+			Point[] resByY= new Point[2];
 			for(int i=0;i<pointsY.length-1;i++){
 				for(int j=i+1; j<pointsY.length  ;j++){
 					double powMod= pow2Module(pointsY[j].getY(),pointsY[i].getY());
@@ -151,11 +152,20 @@ public class ClosestPoint{
 					}
 					//dminsq ← min((S[k].x − S[i].x)^ 2 + (S[k].y − S[i].y)^ 2 , dminsq)
 					double aux= pow2Module(points[j].getX(),points[i].getX() )+pow2Module(points[j].getY(),points[i].getY()); 
-					dMinsY=	min(aux,dMinsY);//obtengo el minimo	
-					//comparar el resultado minimo obtenido aqui con el resultado de la parte minima izq o der.
+					//dMinsY=	min(aux,dMinsY);//obtengo el minimo	
+					if (aux<=dMinsY){
+						//guardo los resultados minimos
+						dMinsY=aux;
+						resByY[0]=points[i];
+						resByY[1]=points[j];
+					}
 				}
 			}
-
+			//comparar el resultado minimo obtenido aqui con el resultado de la parte minima izq o der.
+			if (dist >= dMinsY ){
+				dist=	dMinsY; //entonces El minimo se encontraba cerca de la linea vertical.
+				res=resByY;
+			}
 		}
 		return res;	
 	}
